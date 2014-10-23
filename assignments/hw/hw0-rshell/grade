@@ -1,1 +1,2 @@
-/ 100
+100 / 100
+ls -l;exit not working -5, systemcall misuse -5
