@@ -71,7 +71,7 @@ Or
 `condition` breakpoints will cause the program to pause when the condition is set. The condition can be any conditional
 in the language you are using. This is super useful for loops, when you need to check when the condition will be set. Be 
 careful when setting the breakpoints, as breakpoints in the loop definitions will not work. It must be inside of the
-loop. 
+loop. Any additional conditions will overwrite the previous ones. In order to set multiple conditions, you must create another breakpoint at the same spot.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) continue` or `(gdb) cont`
 
@@ -110,3 +110,5 @@ These commands allow you to move one line backwards in your code.
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) quit` or `(gdb) q`
 
 `quit` does what it sounds like; it quits gdb!
+
+info break
