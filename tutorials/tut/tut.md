@@ -93,6 +93,10 @@ loop. Any additional conditions will overwrite the previous ones. In order to se
 
 `display` prints out `<variable name>` after every `step` or `next` so you can see what value is contained in the variable. You can use `display` to keep track of multiple variables and only have to declare it once within gdb, unlike `print`.
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) undisplay <variable name>`
+
+`undisplay` will undisplay any variable in case you don't need to see it anymore.
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) record` or `(gdb) rec` after `(gdb) run`.
 
 `record` will enable the `reverse-step` and `reverse-next` commands so the user can step backwards through their program.
