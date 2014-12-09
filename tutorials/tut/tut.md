@@ -111,4 +111,16 @@ These commands allow you to move one line backwards in your code.
 
 `quit` does what it sounds like; it quits gdb!
 
-info break
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`info breakpoint` 
+
+`info breakpoint` will print out the number of breakpoints, the type, the location, and any conditions associated with the brekapoint. It will also tell you however many times you've hit the breakpoint. It will also print out any watchpoints.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) clear` 
+
+`clear` will delete all breakpoints set so far.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) delete <breakpoint> <break numbers>`
+
+`delete` will delete any specified breakpoints. If no arguments are specified, it will just delete all breakpoints.
+
+
