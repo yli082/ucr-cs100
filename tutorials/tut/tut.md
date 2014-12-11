@@ -58,6 +58,14 @@ where any errors or outputs occur.
 
 `delete` will delete any specified breakpoints. If no arguments are specified, it will just delete all breakpoints.
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) disable <break numbers>` or `(gdb) dis <break numbers>`
+
+`disable` will disable any specified breakpoints. If no arguments are specified, it will just disable all breakpoints. Disabling disabled breakpoints will do nothing. This is useful if you don't want a breakpoint to stop anymore, but it's there if you feel like you might need it later. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) enable <break numbers>` or `(gdb) en <break numbers>`
+
+`enable` will enable any disabled breakpoints. If no arguments are specified, it will just enable all breakpoints. Enabling enabled breakpoints will do nothing. 
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) run` or `(gdb) r`
 
 `run` runs the program until it ends, accepts input, or until it reaches a breakpoint. Any runs before the program
@@ -70,7 +78,7 @@ After using `run` and reaching a line with input or a breakpoint, there are many
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) watch <variable name>` or `(gdb) wa <variable name>`
 
-`watch` will cause the program to pause whenever the value of an expression changes. In most cases, this expression will generally be a single variable. This is useful when you are sure that a variable shouldn't change, but it does anyways. Watchpoints will not trigger if it is not in the current scope. That means if you're trying to watch a value in a function, but you never go inside the function in gdb, then the program will not pause. In order to fix this, you simply need to add a breakpoint in the function. Disabling watchpoints is the same as disabling a breakpoint. 
+`watch` will cause the program to pause whenever the value of an expression changes. In most cases, this expression will generally be a single variable. This is useful when you are sure that a variable shouldn't change, but it does anyways. Watchpoints will not trigger if it is not in the current scope. That means if you're trying to watch a value in a function, but you never go inside the function in gdb, then the program will not pause. In order to fix this, you simply need to add a breakpoint in the function. Deleting or disabling watchpoints is the same as for a breakpoint. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) condition <breakpoint number> <condition>` or `(gdb) cond 
 <breakpoint number> <condtion>`
@@ -90,19 +98,23 @@ loop. Any additional conditions will overwrite the previous ones. In order to se
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) step` or `(gdb) s`
 
-`step` steps through your code line by line and also lets you walk through any function calls line by line.
+`step` steps through your code line by line and also lets you walk through any function calls line by line. Step has an optional argument, which is just the amount of steps that you want gdb to take. For example, `(gdb) step 5` will step through 5 lines of code. However, it's normally recommended to step through it once and check the variables and outputs, to see if anything is off.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) next` or `(gdb) n`
 
-`next` steps through your code line by line, but will run function calls automatically.
+`next` steps through your code line by line, but will run function calls automatically. Similarly to step, next has an optional argument that will go through the code however many lines specified. For example, `(gdb) next 5` will step through 5 lines of code, however it will still not go into function calls.  
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb)finish`
+
+`finish` is used inside functions. It will run until the function is complete, doing everything normally, and print out the return value of the function. Once the function is finished, it pauses, so the user has to continue it or do other things.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) print <variable name>` or `(gdb) p <variable name>`
 
-`print` prints out the value in any variable once.  
+`print` prints out the value in any variable once. This is extremely useful in tracking your variables. This makes it so that you don't have to output your variables in your source code. Instead, you can just print it here. Be wary though, for the scope of the variable is very important. This can only print out variables in the same scope, so if you're in your main function, and you're trying to print out a variable in another function, and you're going to have a bad time. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) display <variable name>` or `(gdb) disp <variable name>`
 
-`display` prints out `<variable name>` after every `step` or `next` so you can see what value is contained in the variable. You can use `display` to keep track of multiple variables and only have to declare it once within gdb, unlike `print`.
+`display` prints out `<variable name>` after every `step` or `next` so you can see what value is contained in the variable. You can use `display` to keep track of multiple variables and only have to declare it once within gdb, unlike `print`. Similarly to print, you can only display variables in your current scope. That means, whenever you leave that scope, it will automatically undisplay your variable. Display is useful for finding scoping errors, so if you display a variable, and it disappears, you know you've had a bad time.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) undisplay <variable name>`
 
@@ -110,13 +122,17 @@ loop. Any additional conditions will overwrite the previous ones. In order to se
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) record` or `(gdb) rec` after `(gdb) run`.
 
-`record` will enable the `reverse-step` and `reverse-next` commands so the user can step backwards through their program.
+`record` will enable the reverse commands so the user can rewind their program. 
 
 *Note: Using `record` will cause your program to run much slower because it requires a lot of memory to keep track of previous actions.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) reverse-step` or `(gdb) rs` and `(gdb) reverse-next` or `(gdb) rn`
 
-These commands allow you to move one line backwards in your code.
+Sometimes you may go too far in your debugging. Luckily, these commands allow you to move one line backwards in your code. These are exactly the same, except they go in reverse order. It undoes everything the program did, including reverting all variable changes.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) reverse-continue` or `(gdb) rc`
+
+`Reverse-continue` rewinds your program until it hits a breakpoints or until it's at the beginning of the program. It functions exactly the same as normal continue, except it goes backwards!
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) kill` or `(gdb) k`
 
