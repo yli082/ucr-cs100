@@ -110,7 +110,7 @@ loop. Any additional conditions will overwrite the previous ones. In order to se
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) print <variable name>` or `(gdb) p <variable name>`
 
-`print` prints out the value in any variable once. This is extremely useful in tracking your variables. This makes it so that you don't have to output your variables in your source code. Instead, you can just print it here. Be wary though, for the scope of the variable is very important. This can only print out variables in the same scope, so if you're in your main function, and you're trying to print out a variable in another function, and you're going to have a bad time. 
+`print` prints out the value in any variable once. This is extremely useful in tracking your variables. This makes it so that you don't have to output your variables in your source code. Instead, you can just print it here. Be wary though, for the scope of the variable is very important. This can only print out variables in the same scope, so if you're in your main function, and you're trying to print out a variable in another function, and you're going to have a bad time. Print can also change a variable. For example, `(gdb) print <variable> = 50` will change variable to 50.
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) display <variable name>` or `(gdb) disp <variable name>`
 
@@ -119,6 +119,10 @@ loop. Any additional conditions will overwrite the previous ones. In order to se
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) undisplay <variable name>`
 
 `undisplay` will undisplay any variable in case you don't need to see it anymore.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) set var <variable name>=<value>`
+
+`set var` allows you to change a variable. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) record` or `(gdb) rec` after `(gdb) run`.
 
