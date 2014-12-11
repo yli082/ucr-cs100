@@ -11,14 +11,14 @@ After compilation, you want to run it in the following format:
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`$ gdb a.out <flags>`
 
-You can also just run `gdb` and start your program within gdb like so:
+Doing it this way is the quickest way to start debugging. You can also just run `gdb` and start your program within gdb like so:
 
 ```
   $ gdb <flags>
   (gdb) file <executable>
 ```
 
-`file` is the command that tells gdb that the following argument is the program to be debugged.
+`file` is the command that tells gdb that the following argument is the program to be debugged. If there is already a current executable in gdb, then you can use `file` to a new executable, instead of restarting gdb. This is useful whenever you have multiple executables that you need to debug.
 
 ###GDB Flags
 
@@ -32,8 +32,7 @@ This argument can only be used once, and anything after the program will be cons
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`$ gdb -quiet <program>` or `$ gdb -q <program>`
 
-If you don't want your terminal to be flooded with nonsensemoo, then you can use this flag. This flag can be placed
-anywhere except after a --args flag. 
+If you don't want your terminal to be flooded with nonsense, then you can use this flag. It omits the many lines of text explaining legal issues. This flag can be placed anywhere except after the --args flag. 
 
 You can also chain flags together. 
 
@@ -47,6 +46,18 @@ All gdb commands can be shortened to the shortest recognizable command (usually 
 Otherwise, the program would just run. This lets you step through the program after the break, and shows when and 
 where any errors or outputs occur. 
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`info breakpoint` 
+
+`info breakpoint` will print out the number of breakpoints, the type, the location, and any conditions associated with the brekapoint. It will also tell you however many times you've hit the breakpoint. It will also print out any watchpoints.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) clear` 
+
+`clear` will delete all breakpoints set so far.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) delete <breakpoint> <break numbers>`
+
+`delete` will delete any specified breakpoints. If no arguments are specified, it will just delete all breakpoints.
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) run` or `(gdb) r`
 
 `run` runs the program until it ends, accepts input, or until it reaches a breakpoint. Any runs before the program
@@ -59,7 +70,7 @@ After using `run` and reaching a line with input or a breakpoint, there are many
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) watch <variable name>` or `(gdb) wa <variable name>`
 
-`watch` will cause the program to pause at wherever the variable changes.
+`watch` will cause the program to pause whenever the value of an expression changes. In most cases, this expression will generally be a single variable. This is useful when you are sure that a variable shouldn't change, but it does anyways. Watchpoints will not trigger if it is not in the current scope. That means if you're trying to watch a value in a function, but you never go inside the function in gdb, then the program will not pause. In order to fix this, you simply need to add a breakpoint in the function. Disabling watchpoints is the same as disabling a breakpoint. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) condition <breakpoint number> <condition>` or `(gdb) cond 
 <breakpoint number> <condtion>`
@@ -115,16 +126,6 @@ These commands allow you to move one line backwards in your code.
 
 `quit` does what it sounds like; it quits gdb!
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`info breakpoint` 
 
-`info breakpoint` will print out the number of breakpoints, the type, the location, and any conditions associated with the brekapoint. It will also tell you however many times you've hit the breakpoint. It will also print out any watchpoints.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) clear` 
-
-`clear` will delete all breakpoints set so far.
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) delete <breakpoint> <break numbers>`
-
-`delete` will delete any specified breakpoints. If no arguments are specified, it will just delete all breakpoints.
 
 
