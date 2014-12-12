@@ -34,6 +34,10 @@ This argument can only be used once, and anything after the program will be cons
 
 If you don't want your terminal to be flooded with nonsense, then you can use this flag. It omits the many lines of text explaining legal issues. This flag can be placed anywhere except after the --args flag. 
 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`$ gdb <program> -tui`
+
+`-tui` enables the text user interface, which displays the source code of the program. It highlights the next line to be executed. All normal gdb commands are enabled in this mode. When `-tui` is enabled, stepping through your program will not print out `cout` statements; because of this, it is recommended to only use `-tui` to trace variables in source code alongside `display` and `print`.
+
 You can also chain flags together. 
 
 ###Running GDB
@@ -119,6 +123,10 @@ loop. Any additional conditions will overwrite the previous ones. In order to se
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) undisplay <variable name>`
 
 `undisplay` will undisplay any variable in case you don't need to see it anymore.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) whatis <variable name>`
+
+`whatis` will tell you what type the variable is. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`(gdb) set var <variable name>=<value>`
 
